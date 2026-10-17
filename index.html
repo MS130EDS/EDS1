@@ -1,0 +1,20 @@
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxwyjoXJXyBjF6VNfiel7im4Kh-rtO1mQH0nPQ-sznL-b2wZwUoPOe8Ti7D7OiuadPf/exec";
+// Load live inventory
+async function loadInventory() {
+  const response = await fetch(`${SCRIPT_URL}?action=getInventory`);
+  const inventory = await response.json();
+  return inventory;
+}
+
+// Record sale
+async function recordSale(saleData) {
+  await fetch(SCRIPT_URL, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify({
+      action: "recordSale",
+      ...saleData
+    })
+  });
+  alert("Sale saved successfully!");
+}
